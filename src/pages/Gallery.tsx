@@ -6,7 +6,7 @@ import { ImageModal } from "@/components/ImageModal";
 import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { demoImages } from "@/lib/demoData";
+import { galleryImages } from "@/lib/galleryData";
 
 type Image = {
   id: string;
@@ -22,7 +22,10 @@ export default function Gallery() {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const { toast } = useToast();
+
+  const categories = ["All", "Nature", "Architecture", "Portrait", "Travel", "Art"];
 
   useEffect(() => {
     fetchImages();
@@ -57,13 +60,13 @@ export default function Gallery() {
       if (!user) {
         toast({
           title: "Authentication required",
-          description: "Please log in to add demo portfolios",
+          description: "Please log in to load new images",
           variant: "destructive",
         });
         return;
       }
 
-      for (const demo of demoImages) {
+      for (const demo of galleryImages) {
         await supabase.from('images').insert({
           title: demo.title,
           category: demo.category,
@@ -73,16 +76,20 @@ export default function Gallery() {
         });
       }
 
-      toast({ title: "Demo portfolios added successfully!" });
+      toast({ title: "New images loaded successfully!" });
       fetchImages();
     } catch (error) {
       toast({
-        title: "Failed to add demo data",
+        title: "Failed to load images",
         description: "Please try again",
         variant: "destructive",
       });
     }
   };
+
+  const filteredImages = selectedCategory === "All" 
+    ? images 
+    : images.filter(img => img.category === selectedCategory);
 
   const handleImageClick = (image: Image) => {
     setSelectedImage(image);
@@ -95,11 +102,11 @@ export default function Gallery() {
       
       <main className="container mx-auto px-4 pt-24 pb-12">
         <div className="text-center mb-12 animate-fade-in">
-          <h1 className="text-5xl font-bold mb-4 bg-[var(--gradient-hero)] bg-clip-text text-transparent">
-            Portfolio Gallery
+          <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-[var(--gradient-hero)] bg-clip-text text-transparent">
+            Visual Gallery
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-6">
-            Explore beautiful creative works from talented artists
+            Explore our curated collection of {images.length} premium visual stories
           </p>
           <Button
             onClick={handleAddDemoData}
@@ -107,8 +114,22 @@ export default function Gallery() {
             className="gap-2"
           >
             <Sparkles className="w-4 h-4" />
-            Add Demo Portfolios
+            Load New Images
           </Button>
+        </div>
+
+        {/* Category Filter */}
+        <div className="flex justify-center gap-2 mb-12 flex-wrap">
+          {categories.map((category) => (
+            <Button
+              key={category}
+              variant={selectedCategory === category ? "default" : "outline"}
+              onClick={() => setSelectedCategory(category)}
+              className="rounded-full"
+            >
+              {category}
+            </Button>
+          ))}
         </div>
 
         {loading ? (
@@ -117,14 +138,18 @@ export default function Gallery() {
               <Skeleton key={i} className="h-64 w-full rounded-xl" />
             ))}
           </div>
-        ) : images.length === 0 ? (
+        ) : filteredImages.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-muted-foreground text-lg">No images yet. Be the first to upload!</p>
+            <p className="text-muted-foreground text-lg">
+              {images.length === 0 
+                ? "No images yet. Click 'Load New Images' to add the gallery!" 
+                : "No images in this category"}
+            </p>
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {images.map((image) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {filteredImages.map((image) => (
                 <div
                   key={image.id}
                   onClick={() => handleImageClick(image)}

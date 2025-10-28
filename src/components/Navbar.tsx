@@ -28,18 +28,26 @@ export const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 text-xl font-semibold bg-[var(--gradient-lavender)] bg-clip-text text-transparent">
-          <Image className="w-6 h-6 text-primary" />
-          Cloud Gallery
+        <Link to="/" className="text-xl font-bold">
+          Portfolio
         </Link>
         
-        <div className="flex items-center gap-4">
-          <Link to="/about" className="text-sm font-medium hover:text-primary transition-colors">
-            About
+        <div className="hidden md:flex items-center gap-6">
+          <Link to="/" className="hover:text-primary transition-colors">
+            Home
           </Link>
-          <Link to="/contact" className="text-sm font-medium hover:text-primary transition-colors">
+          <Link to="/projects" className="hover:text-primary transition-colors">
+            Projects
+          </Link>
+          <Link to="/gallery" className="hover:text-primary transition-colors">
+            Gallery
+          </Link>
+          <Link to="/contact" className="hover:text-primary transition-colors">
             Contact
           </Link>
+        </div>
+        
+        <div className="flex items-center gap-4">
           
           <ThemeToggle />
           
