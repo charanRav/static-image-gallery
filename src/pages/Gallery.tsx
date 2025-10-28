@@ -43,7 +43,7 @@ export default function Gallery() {
   }, []);
 
   const fetchImages = async () => {
-    const { data, error } = await supabase
+    const { data, error } = await (supabase as any)
       .from('images')
       .select('*')
       .order('created_at', { ascending: false });
@@ -67,7 +67,7 @@ export default function Gallery() {
       }
 
       for (const demo of galleryImages) {
-        await supabase.from('images').insert({
+        await (supabase as any).from('images').insert({
           title: demo.title,
           category: demo.category,
           description: demo.description,

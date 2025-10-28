@@ -38,7 +38,7 @@ export default function Dashboard() {
         .from('portfolio-images')
         .getPublicUrl(fileName);
 
-      const { error: dbError } = await supabase.from('images').insert({
+      const { error: dbError } = await (supabase as any).from('images').insert({
         title,
         category,
         description,
