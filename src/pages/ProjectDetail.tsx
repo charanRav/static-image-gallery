@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 import { portfolioProjects } from "@/lib/portfolioData";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -101,6 +102,7 @@ export default function ProjectDetail() {
                     src={image}
                     alt={`${project.title} - Image ${index + 1}`}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
@@ -109,6 +111,7 @@ export default function ProjectDetail() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
