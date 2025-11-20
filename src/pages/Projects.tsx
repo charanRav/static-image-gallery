@@ -73,7 +73,7 @@ export default function Projects() {
                   </div>
 
                   <Link to={`/projects/${project.id}`}>
-                    <Button className="gap-2 group-hover:gap-3 transition-all">
+                    <Button className="gap-2 group-hover:gap-3 transition-all shadow-md hover:shadow-lg">
                       View Portfolio
                       <ExternalLink className="w-4 h-4" />
                     </Button>

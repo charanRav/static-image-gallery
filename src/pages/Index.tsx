@@ -32,13 +32,13 @@ const Index = () => {
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link to="/gallery">
-              <Button size="lg" className="gap-2 text-lg px-8 py-6">
+              <Button size="lg" className="gap-2 text-lg px-8 py-6 shadow-lg hover:shadow-xl">
                 Explore Gallery
                 <ArrowRight className="w-5 h-5" />
               </Button>
             </Link>
             <Link to="/projects">
-              <Button size="lg" variant="outline" className="gap-2 text-lg px-8 py-6 bg-white/10 text-white border-white/30 hover:bg-white/20 hover:text-white">
+              <Button size="lg" variant="outline" className="gap-2 text-lg px-8 py-6 bg-white/10 text-white border-white/30 hover:bg-white/20 hover:text-white shadow-lg backdrop-blur-sm">
                 Learn More
               </Button>
             </Link>

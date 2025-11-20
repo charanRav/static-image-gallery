@@ -54,19 +54,19 @@ export const Navbar = () => {
           {user ? (
             <>
               <Link to="/dashboard">
-                <Button variant="outline" size="sm" className="gap-2">
+                <Button variant="outline" size="sm" className="gap-2 hover:shadow-md">
                   <Upload className="w-4 h-4" />
-                  Upload
+                  <span className="hidden sm:inline">Upload</span>
                 </Button>
               </Link>
-              <Button variant="ghost" size="sm" onClick={handleLogout} className="gap-2">
+              <Button variant="ghost" size="sm" onClick={handleLogout} className="gap-2 hover:bg-destructive/10 hover:text-destructive">
                 <LogOut className="w-4 h-4" />
-                Logout
+                <span className="hidden sm:inline">Logout</span>
               </Button>
             </>
           ) : (
             <Link to="/auth">
-              <Button size="sm" className="bg-[var(--gradient-lavender)]">
+              <Button size="sm" className="shadow-md hover:shadow-lg">
                 Login
               </Button>
             </Link>
