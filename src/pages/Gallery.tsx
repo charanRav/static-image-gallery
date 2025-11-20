@@ -5,9 +5,10 @@ import { Footer } from "@/components/Footer";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ImageModal } from "@/components/ImageModal";
 import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { galleryImages } from "@/lib/galleryData";
+import type { User } from "@supabase/supabase-js";
 
 type Image = {
   id: string;
@@ -16,6 +17,7 @@ type Image = {
   description: string | null;
   image_url: string;
   created_at: string;
+  user_id: string;
 };
 
 export default function Gallery() {
@@ -24,12 +26,21 @@ export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [user, setUser] = useState<User | null>(null);
   const { toast } = useToast();
 
   const categories = ["All", "Nature", "Architecture", "Portrait", "Travel", "Art"];
 
   useEffect(() => {
     fetchImages();
+
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
 
     const channel = supabase
       .channel('images-changes')
@@ -39,6 +50,7 @@ export default function Gallery() {
       .subscribe();
 
     return () => {
+      subscription.unsubscribe();
       supabase.removeChannel(channel);
     };
   }, []);
@@ -82,6 +94,53 @@ export default function Gallery() {
     } catch (error) {
       toast({
         title: "Failed to load images",
+        description: "Please try again",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDeleteImage = async (image: Image) => {
+    try {
+      if (!user) {
+        toast({
+          title: "Authentication required",
+          description: "Please log in to delete images",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Extract file path from URL
+      const urlParts = image.image_url.split('/');
+      const bucketIndex = urlParts.findIndex(part => part === 'portfolio-images');
+      if (bucketIndex !== -1) {
+        const filePath = urlParts.slice(bucketIndex + 1).join('/');
+        
+        // Delete from storage
+        const { error: storageError } = await supabase.storage
+          .from('portfolio-images')
+          .remove([filePath]);
+
+        if (storageError) {
+          console.error('Storage deletion error:', storageError);
+        }
+      }
+
+      // Delete from database
+      const { error: dbError } = await (supabase as any)
+        .from('images')
+        .delete()
+        .eq('id', image.id);
+
+      if (dbError) throw dbError;
+
+      toast({ title: "Image deleted successfully!" });
+      fetchImages();
+      setModalOpen(false);
+    } catch (error) {
+      toast({
+        title: "Failed to delete image",
         description: "Please try again",
         variant: "destructive",
       });
@@ -153,16 +212,16 @@ export default function Gallery() {
               {filteredImages.map((image) => (
                 <div
                   key={image.id}
-                  onClick={() => handleImageClick(image)}
-                  className="group relative overflow-hidden rounded-xl bg-card shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-hover)] transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+                  className="group relative overflow-hidden rounded-xl bg-card shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-hover)] transition-all duration-300 hover:-translate-y-1"
                 >
                   <img
                     src={image.image_url}
                     alt={image.title}
-                    className="w-full h-64 object-cover"
+                    className="w-full h-64 object-cover cursor-pointer"
                     loading="lazy"
+                    onClick={() => handleImageClick(image)}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                     <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
                       <h3 className="font-semibold text-lg mb-1">{image.title}</h3>
                       {image.category && (
@@ -170,6 +229,19 @@ export default function Gallery() {
                       )}
                     </div>
                   </div>
+                  {user && user.id === image.user_id && (
+                    <Button
+                      variant="destructive"
+                      size="icon"
+                      className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-auto"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteImage(image);
+                      }}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  )}
                 </div>
               ))}
             </div>
