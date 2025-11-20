@@ -171,7 +171,7 @@ export default function Gallery() {
           <Button
             onClick={handleAddDemoData}
             variant="outline"
-            className="gap-2"
+            className="gap-2 shadow-md hover:shadow-lg"
           >
             <Sparkles className="w-4 h-4" />
             Load New Images
@@ -185,7 +185,7 @@ export default function Gallery() {
               key={category}
               variant={selectedCategory === category ? "default" : "outline"}
               onClick={() => setSelectedCategory(category)}
-              className="rounded-full"
+              className="rounded-full shadow-sm hover:shadow-md"
             >
               {category}
             </Button>
@@ -233,7 +233,7 @@ export default function Gallery() {
                     <Button
                       variant="destructive"
                       size="icon"
-                      className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-auto"
+                      className="absolute top-2 right-2 shadow-lg pointer-events-auto"
                       onClick={(e) => {
                         e.stopPropagation();
                         handleDeleteImage(image);
