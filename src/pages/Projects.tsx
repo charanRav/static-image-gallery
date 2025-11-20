@@ -13,7 +13,7 @@ export default function Projects() {
       
       <main className="container mx-auto px-4 pt-24 pb-12">
         <div className="text-center mb-12 animate-fade-in">
-          <h1 className="text-5xl font-bold mb-4 bg-[var(--gradient-hero)] bg-clip-text text-transparent">
+          <h1 className="text-5xl font-bold mb-4 text-foreground">
             Featured Projects
           </h1>
           <div className="w-24 h-1 bg-primary mx-auto mb-6" />
@@ -42,13 +42,13 @@ export default function Projects() {
                 
                 <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
                   <div className="mb-4">
-                    <Badge variant="secondary" className="mb-4">
+                    <Badge variant="secondary" className="mb-4 font-medium">
                       {project.category}
                     </Badge>
-                    <h2 className="text-4xl font-bold mb-4 group-hover:text-primary transition-colors">
+                    <h2 className="text-4xl font-bold mb-4 text-foreground group-hover:text-primary transition-colors">
                       {project.title}
                     </h2>
-                    <p className="text-muted-foreground text-lg mb-6">
+                    <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
                       {project.excerpt}
                     </p>
                   </div>

@@ -8,7 +8,7 @@ export default function About() {
       
       <main className="container mx-auto px-4 pt-24 pb-12">
         <div className="max-w-3xl mx-auto animate-fade-in">
-          <h1 className="text-5xl font-bold mb-6 bg-[var(--gradient-hero)] bg-clip-text text-transparent">
+          <h1 className="text-5xl font-bold mb-6 text-foreground">
             About This Gallery
           </h1>
           
