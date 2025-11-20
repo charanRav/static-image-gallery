@@ -32,7 +32,7 @@ export default function ProjectDetail() {
               <Badge variant="secondary">{project.category}</Badge>
               <span className="text-muted-foreground">{project.year}</span>
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-[var(--gradient-hero)] bg-clip-text text-transparent">
+            <h1 className="text-5xl md:text-6xl font-bold mb-4 text-foreground">
               {project.title}
             </h1>
           </div>

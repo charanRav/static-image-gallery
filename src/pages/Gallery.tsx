@@ -162,7 +162,7 @@ export default function Gallery() {
       
       <main className="container mx-auto px-4 pt-24 pb-12">
         <div className="text-center mb-12 animate-fade-in">
-          <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-[var(--gradient-hero)] bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-6xl font-bold mb-4 text-foreground">
             Visual Gallery
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-6">
@@ -223,9 +223,9 @@ export default function Gallery() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                     <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                      <h3 className="font-semibold text-lg mb-1">{image.title}</h3>
+                      <h3 className="font-semibold text-lg mb-1 drop-shadow-lg">{image.title}</h3>
                       {image.category && (
-                        <p className="text-sm text-white/80">{image.category}</p>
+                        <p className="text-sm text-white/90 drop-shadow-md">{image.category}</p>
                       )}
                     </div>
                   </div>

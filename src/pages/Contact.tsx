@@ -30,7 +30,7 @@ export default function Contact() {
       
       <main className="container mx-auto px-4 pt-24 pb-12">
         <div className="max-w-2xl mx-auto animate-fade-in">
-          <h1 className="text-5xl font-bold mb-6 bg-[var(--gradient-hero)] bg-clip-text text-transparent text-center">
+          <h1 className="text-5xl font-bold mb-6 text-foreground text-center">
             Get In Touch
           </h1>
           <p className="text-center text-muted-foreground text-lg mb-12">
@@ -73,7 +73,7 @@ export default function Contact() {
                 />
               </div>
               
-              <Button type="submit" className="w-full bg-[var(--gradient-lavender)]">
+              <Button type="submit" className="w-full shadow-md hover:shadow-lg">
                 Send Message
               </Button>
             </form>

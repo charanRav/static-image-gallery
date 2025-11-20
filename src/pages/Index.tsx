@@ -23,12 +23,12 @@ const Index = () => {
         }}
       >
         <div className="container mx-auto px-4 text-center z-10 animate-fade-in">
-          <h1 className="text-6xl md:text-8xl font-bold mb-6 text-white">
+          <h1 className="text-6xl md:text-8xl font-bold mb-6 text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
             Creative<br />Portfolio
           </h1>
-          <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl md:text-2xl text-white/95 mb-8 max-w-2xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
             Visual storyteller crafting digital experiences through{" "}
-            <span className="text-primary font-semibold">photography & design</span>
+            <span className="text-primary font-semibold bg-black/30 px-2 py-1 rounded">photography & design</span>
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link to="/gallery">
@@ -50,7 +50,7 @@ const Index = () => {
       <section className="py-20 bg-gradient-to-br from-background via-muted/30 to-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold mb-4 bg-[var(--gradient-hero)] bg-clip-text text-transparent">
+            <h2 className="text-5xl font-bold mb-4 text-foreground">
               Featured Projects
             </h2>
             <div className="w-24 h-1 bg-primary mx-auto mb-6" />
@@ -71,13 +71,13 @@ const Index = () => {
                   
                   <div className="p-6">
                     <div className="flex items-start justify-between mb-3">
-                      <h3 className="text-2xl font-semibold group-hover:text-primary transition-colors">
+                      <h3 className="text-2xl font-semibold text-foreground group-hover:text-primary transition-colors">
                         {project.title}
                       </h3>
-                      <ExternalLink className="w-5 h-5 text-muted-foreground" />
+                      <ExternalLink className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
                     </div>
                     
-                    <p className="text-muted-foreground mb-4 line-clamp-2">
+                    <p className="text-muted-foreground mb-4 line-clamp-2 leading-relaxed">
                       {project.excerpt}
                     </p>
                     
